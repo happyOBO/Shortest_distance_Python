@@ -104,70 +104,14 @@ def AddDirect_complicated(NEWSList):
         NEWStuple = (NEWSList[i],NEWSList[i+1])
         
         if (NEWStuple in s):
-            print(NEWStuple,'straight')
             DirectList.append('straight')
         if(NEWStuple in l):
-            print(NEWStuple,'left')
             DirectList.append('left')
         if(NEWStuple in r):
-            print(NEWStuple,'right')
             DirectList.append('right')
         if(NEWStuple in t):
-            print(NEWStuple,'turn')
             DirectList.append('turn')
         i +=1
-    return DirectList
-
-def AddDirect(OrderList):
-    Dual_Cross = [(1,0),(1,4)]
-    Trip_Cross = [(1,1),(1,3)]
-    left_sign = [(0,-1,-1,0),(0,1,1,0),(-1,0,0,1),(1,0,0,-1)]
-    right_sign = [(0,-1,1,0),(0,1,-1,0),(-1,0,0,-1),(1,0,0,1)]
-    DirectList = []
-    i = 0
-    while(i < len(OrderList)):
-        if( i == 0 or i == len(OrderList) -1 or OrderList[i] == (1,2)):
-            DirectList.append(OrderList[i])
-        elif(OrderList[i] in Trip_Cross):
-            if( 0 < i < len(OrderList) -1):
-                if(OrderList[i - 1][0] == OrderList[i + 1][0] or OrderList[i - 1][1] == OrderList[i + 1][1]):
-                    DirectList.append(OrderList[i])
-                    DirectList.append('straight')
-                else:
-                    # print("Cross sign : ",OrderList[i-1] + OrderList[i+1])
-                    x = OrderList[i][0]
-                    y = OrderList[i][1]
-                    sign_series = (OrderList[i-1][0] - x , OrderList[i-1][1] - y , OrderList[i+1][0] - x , OrderList[i+1][1] - y )
-                    if(sign_series in left_sign):
-                        DirectList.append(OrderList[i])
-                        DirectList.append('left')
-                    elif(sign_series in right_sign):
-                        DirectList.append(OrderList[i])
-                        DirectList.append('right')
-                    else:
-                        print("Exception error_1")
-            else:
-                print("Exception error_2")
-
-        elif(OrderList[i] in Dual_Cross):
-            x = OrderList[i][0]
-            y = OrderList[i][1]
-            sign_series = (OrderList[i-1][0] - x , OrderList[i-1][1] - y , OrderList[i+1][0] - x , OrderList[i+1][1] - y )
-            if(0 < i < len(OrderList) -1):
-                if(sign_series in left_sign):
-                    DirectList.append(OrderList[i])
-                    DirectList.append('left')
-                elif(sign_series in right_sign):
-                    DirectList.append(OrderList[i])
-                    DirectList.append('right')
-                else:
-                    print("Exception error_3")
-            else:
-                print("Exception error_4")
-        else:
-            DirectList.append(OrderList[i])
-            DirectList.append('right')
-        i += 1
     return DirectList
 
 def AddNEWS(strtNEWS,OrderList):
@@ -192,24 +136,23 @@ def AddNEWS(strtNEWS,OrderList):
         i += 1
     return NEWS
 
-
+# 함수화
 def navigator(strtNEWS, strt_pos, dst_pos):
     check = weight(strt_pos, dst_pos)
     OrderList = MakeOrder(strt_pos, dst_pos,check)
     NEWSList = AddNEWS(strtNEWS,OrderList)
     DirectList = AddDirect_complicated(NEWSList)
 
-
+    # 중간 다리 제거
     if( (1,2) in OrderList ):
         OrderList.remove((1,2))
-        # DirectList.remove((1,2))
     return OrderList,DirectList,NEWSList
 
 Order,Direct,NEWS = navigator('N',(2,1),(0,4))
 
-print("순서 리스트 ")
+print("Order List")
 print(Order)
-print("순서 및 방향 리스트")
+print("Action List")
 print(Direct)
-print("NEWS 리스트")
+print("NEWS List")
 print(NEWS)
