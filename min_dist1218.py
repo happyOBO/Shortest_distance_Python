@@ -104,13 +104,13 @@ def AddDirect_complicated(NEWSList):
         NEWStuple = (NEWSList[i],NEWSList[i+1])
         
         if (NEWStuple in s):
-            DirectList.append('straight')
+            DirectList.append(4) # straight
         if(NEWStuple in l):
-            DirectList.append('left')
+            DirectList.append(3) # left
         if(NEWStuple in r):
-            DirectList.append('right')
+            DirectList.append(2) # right
         if(NEWStuple in t):
-            DirectList.append('turn')
+            DirectList.append(5) # turn
         i +=1
     return DirectList
 
@@ -152,7 +152,7 @@ def navigator(strtNEWS, strt_pos, dst_pos):
         OrderList.remove((1,2))
     return OrderList,DirectList,NEWSList
 
-Order,Direct,NEWS = navigator('N',(2,1),(2,4))
+Order,Direct,NEWS = navigator('N',(2,4),(2,0))
 
 print("Order List")
 print(Order)
