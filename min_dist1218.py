@@ -13,7 +13,7 @@ def weight(strt_pos, dst_pos):
     # 목적지 좌표
     (dst_x,dst_y) = dst_pos
     # 맵에서 갈수 있는 곳은 1 못가는 곳은 0으로 표시
-    arr = [[1,1,0,1,1],[1,1,1,1,1],[0,1,0,1,1]]
+    arr = [[1,1,0,1,1],[1,1,1,1,1],[1,1,0,1,1]]
     q = Queue.Queue()
     # 맵 최단거리 값 누적 표시하는 check 생성
     check = [[-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1]]
@@ -139,6 +139,10 @@ def AddNEWS(strtNEWS,OrderList):
 # 함수화
 def navigator(strtNEWS, strt_pos, dst_pos):
     check = weight(strt_pos, dst_pos)
+    for i in range(3):
+        for j in range(5):
+            print check[i][j] ,
+        print '\n',
     OrderList = MakeOrder(strt_pos, dst_pos,check)
     NEWSList = AddNEWS(strtNEWS,OrderList)
     DirectList = AddDirect_complicated(NEWSList)
@@ -148,7 +152,7 @@ def navigator(strtNEWS, strt_pos, dst_pos):
         OrderList.remove((1,2))
     return OrderList,DirectList,NEWSList
 
-Order,Direct,NEWS = navigator('N',(2,1),(0,4))
+Order,Direct,NEWS = navigator('N',(2,1),(2,4))
 
 print("Order List")
 print(Order)
