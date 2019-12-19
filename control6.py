@@ -37,8 +37,7 @@ class I2CComm(object):
         self.master = ambus.SMBus(self.I2C_BUS_NUM)
         self.slave_addr_list =4
     def run(self):
-        global Order
-        global on_off
+        global Order,on_off,Direct, Order, NEWS
         me = self.masterrospy.init_node('zumi_control',anonymous = True)
         rospy.Subscriber('send_trf',String,callback)
         rate = rospy.Rate(3)
